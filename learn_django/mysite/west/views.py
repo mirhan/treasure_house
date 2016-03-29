@@ -9,9 +9,7 @@ def first_page(request):
 
 def staff(request):
     staff_list = Character.objects.all()
-    staff_str  = map(str, staff_list)
-    context   = {'label': ' '.join(staff_str)}
-    return render(request, 'templay.html', context)
+    return render(request, 'templay.html', {'staffs': staff_list})
 # Create your views here.
 
 def templay(request):
