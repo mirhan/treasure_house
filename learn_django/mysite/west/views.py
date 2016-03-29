@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from west.models import Character
 from django.shortcuts import render
 from django.core.context_processors import csrf
+from django import forms
 
 
 def first_page(request):
@@ -21,9 +22,21 @@ def templay(request):
 def form(request):
     return render(request, 'form.html')
 
+class CharacterForm(forms.Form):
+    name = forms.CharField(max_length = 200)
+    
 def investigate(request):
-    ctx = {}
-    ctx.update(csrf(request))
     if request.POST:
-        ctx['rlt'] = request.POST['staff']
+        form = CharacterForm(request.POST)
+        if form.is_valid():
+            submitted  = form.cleaned_data['name']
+            new_record = Character(name = submitted)
+            new_record.save()
+
+    form = CharacterForm()
+    ctx ={}
+    ctx.update(csrf(request))
+    all_records = Character.objects.all()
+    ctx['staff'] = all_records
+    ctx['form']  = form
     return render(request, "investigate.html", ctx)
