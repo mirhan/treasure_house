@@ -2,6 +2,7 @@
 from django.http import HttpResponse
 from west.models import Character
 from django.shortcuts import render
+from django.core.context_processors import csrf
 
 
 def first_page(request):
@@ -21,5 +22,8 @@ def form(request):
     return render(request, 'form.html')
 
 def investigate(request):
-    rlt = request.GET['staff']
-    return HttpResponse(rlt)
+    ctx = {}
+    ctx.update(csrf(request))
+    if request.POST:
+        ctx['rlt'] = request.POST['staff']
+    return render(request, "investigate.html", ctx)
