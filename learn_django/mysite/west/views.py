@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse
-
 from west.models import Character
+from django.shortcuts import render
 
 
 def first_page(request):
@@ -12,3 +12,8 @@ def staff(request):
     staff_str  = map(str, staff_list)
     return HttpResponse("<p>" + ' '.join(staff_str) + "</p>")
 # Create your views here.
+
+def templay(request):
+    context          = {}
+    context['label'] = 'Hello World!'
+    return render(request, 'templay.html', context)
