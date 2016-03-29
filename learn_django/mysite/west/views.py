@@ -16,3 +16,10 @@ def templay(request):
     context          = {}
     context['label'] = 'Hello World!'
     return render(request, 'templay.html', context)
+
+def form(request):
+    return render(request, 'form.html')
+
+def investigate(request):
+    rlt = request.GET['staff']
+    return HttpResponse(rlt)
