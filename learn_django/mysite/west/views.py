@@ -2,7 +2,7 @@
 from django.http import HttpResponse
 from west.models import Character
 from django.shortcuts import render
-from django.core.context_processors import csrf
+from django.template.context_processors import csrf
 from django import forms
 
 

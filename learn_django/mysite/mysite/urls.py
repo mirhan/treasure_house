@@ -16,9 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.conf.urls import include
 from django.contrib import admin
+from mysite import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', 'mysite.views.first_page'),
+    url(r'^$', views.first_page),
     url(r'^west/', include('west.urls')),
 ]
