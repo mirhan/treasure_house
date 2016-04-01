@@ -4,19 +4,21 @@ from west.models import Character
 from django.shortcuts import render
 from django.template.context_processors import csrf
 from django import forms
+from django.contrib.auth.decorators import login_required
+
+@login_required(login_url='/users/login/')
+def user_only(request):
+    return HttpResponse("<p>This message is for logged in user only.</p>")
 
 
+# Create your views here.
 def first_page(request):
     return HttpResponse("<p>西餐</p>")
 
 def staff(request):
-    if request.user.is_authenticated():
-        staff_list = Character.objects.all()
-        return render(request, 'templay.html', {'staffs': staff_list})
-    else:
-        content = "<p>you wired stranger</p>"
-        return HttpResponse(content)
-# Create your views here.
+    staff_list = Character.objects.all()
+    return user_only(request)
+    # return render(request, 'templay.html', {'staffs': staff_list})
 
 def templay(request):
     context          = {}
