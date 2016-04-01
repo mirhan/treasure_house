@@ -2,8 +2,12 @@
 
 {% block mainbody %}
 
-{% for item in staffs %}
-<p>{{ item.id }}, {{item}}</p>
-{% endfor %}
+{% if user.is_authenticated %}
+    {% for item in staffs %}
+    <p>{{ item.id }}, {{item}}</p>
+    {% endfor %}
+{% else %}
+    <p>Sorry, not login, you are not yet my sweetheart. </p>
+{% endif %}
 
 {% endblock %}

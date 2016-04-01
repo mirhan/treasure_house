@@ -26,8 +26,8 @@ def first_page(request):
 
 def staff(request):
     staff_list = Character.objects.all()
-    return user_only(request)
-    # return render(request, 'templay.html', {'staffs': staff_list})
+    # return user_only(request)
+    return render(request, 'templay.html', {'staffs': staff_list})
 
 def templay(request):
     return specific_user(request)
