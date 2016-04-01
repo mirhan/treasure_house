@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.context_processors import csrf
 from django.contrib.auth import *
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import *
 
 # Create your views here.
 def user_login(request):
@@ -30,3 +30,15 @@ def user_logout(request):
     '''
     logout(request)
     return redirect('/')
+
+def register(request): 
+    if request.method == 'POST': 
+        form = UserCreationForm(request.POST) 
+        if form.is_valid(): 
+            new_user = form.save() 
+        return redirect("/") 
+    else:
+        form = UserCreationForm()
+        ctx = {'form': form}
+        ctx.update(csrf(request))       
+        return render(request, "register.html", ctx)
