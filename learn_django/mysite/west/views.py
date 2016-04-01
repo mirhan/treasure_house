@@ -10,8 +10,12 @@ def first_page(request):
     return HttpResponse("<p>西餐</p>")
 
 def staff(request):
-    staff_list = Character.objects.all()
-    return render(request, 'templay.html', {'staffs': staff_list})
+    if request.user.is_authenticated():
+        staff_list = Character.objects.all()
+        return render(request, 'templay.html', {'staffs': staff_list})
+    else:
+        content = "<p>you wired stranger</p>"
+        return HttpResponse(content)
 # Create your views here.
 
 def templay(request):
