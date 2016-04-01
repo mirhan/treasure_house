@@ -22,3 +22,11 @@ def user_login(request):
     ctx.update(csrf(request))
     ctx['form'] = form
     return render(request, 'login.html',ctx)
+
+def user_logout(request):
+    '''
+    logout
+    URL: /users/logout
+    '''
+    logout(request)
+    return redirect('/')
