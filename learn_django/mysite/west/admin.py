@@ -16,6 +16,8 @@ class ContactAdmin(admin.ModelAdmin):
             'fields': ('age',),
         }]
     )
+    list_display = ('name','age', 'email') 
+    search_fields = ('name','age', 'email') 
 
 admin.site.register(Contact, ContactAdmin)
 admin.site.register([Character, Tag])
