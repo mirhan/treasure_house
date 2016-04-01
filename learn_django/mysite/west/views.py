@@ -5,11 +5,20 @@ from django.shortcuts import render
 from django.template.context_processors import csrf
 from django import forms
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 
 @login_required(login_url='/users/login/')
 def user_only(request):
     return HttpResponse("<p>This message is for logged in user only.</p>")
 
+def name_check(user):
+    print 'username !'
+    print user.get_username()
+    return user.get_username() == 'vamei'
+
+@user_passes_test(name_check, login_url='/users/login/')
+def specific_user(request):
+    return HttpResponse("<p>for Vamei only</p>")
 
 # Create your views here.
 def first_page(request):
@@ -21,9 +30,10 @@ def staff(request):
     # return render(request, 'templay.html', {'staffs': staff_list})
 
 def templay(request):
-    context          = {}
-    context['label'] = 'Hello World!'
-    return render(request, 'templay.html', context)
+    return specific_user(request)
+    # context          = {}
+    # context['label'] = 'Hello World!'
+    # return render(request, 'templay.html', context)
 
 def form(request):
     return render(request, 'form.html')
