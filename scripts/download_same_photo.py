@@ -23,23 +23,24 @@ def download_url(_to, _from):
         _cmd = 'wget -P %s %s' % (_to, _from)
         os.system(_cmd)
 
+def get_jpg_name(url):
+    if url:
+        return url.rsplit('/', 1)[-1]
+    return None
+
 if __name__ == '__main__':
     with open(log_path, 'r+') as openfileobject:
-        i = 0
         threads = []
         for line in openfileobject:
             line = line.rstrip()
-            # download_url(pic_path, line)
-            print pic_path
-            print line
-            a = threading.Thread(target=download_url,args=(pic_path, line))
-            threads.append(a)
-            a.start()
 
-            i = i + 1
-            if i % 10 == 0:
-                print i
-            time.sleep(random.random())
+            file_path = os.path.join(pic_path, get_jpg_name(line))
+            if not os.path.isfile(file_path):
+                a = threading.Thread(target=download_url,args=(pic_path, line))
+                threads.append(a)
+                a.start()
+
+                time.sleep(random.random())
 
         for x in threads:
             x.join()
