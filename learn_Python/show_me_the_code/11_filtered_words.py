@@ -12,7 +12,7 @@ def get_filter_words(filter_words_path):
     for i in range(len(open_file)):
         open_file[i] = open_file[i].strip()
 
-    return open_file
+    return set(open_file)
 
 def is_string_banned(s):
     is_banned = False
